@@ -15,7 +15,7 @@ $ docker run --rm -it yoohahn/work-container:latest
 
 ### With volumes
 ```bash
-$ USR=$(whoami) docker run --rm \
+$ USR=$(whoami) && docker run --rm \
     -v /Users/$USR/Projects:/root/git \
     -v /Users/$USR/.gradle:/root/.gradle \
     -v /Users/$USR/.npmrc:/root/.npmrc \
