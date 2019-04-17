@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:18.10
 
 WORKDIR /root
 ENV PATH="/opt/gradle/gradle-5.3.1/bin:/root/go/bin:${PATH}"
