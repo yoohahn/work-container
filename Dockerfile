@@ -1,23 +1,32 @@
-FROM ubuntu:18.10
+FROM ubuntu:19.04 AS build
 
 WORKDIR /root
-ENV PATH="/opt/gradle/gradle-5.3.1/bin:/root/go/bin:${PATH}"
+# ENV GOPATH=/root/go
 ENV TERM=xterm
-ENV GOPATH=/root/go
 
-RUN apt-get update -y && \
-    apt install -y dirmngr wget curl apt-utils unzip && \
-    curl -sL https://deb.nodesource.com/setup_11.x | bash - && \
-    apt-get install -y nodejs && \
-    apt-get update -y && \
-    apt-get install -y openjdk-8-jdk && \
-    apt-get update -y && \
-    apt-get install -y git && \
-    apt-get install -y golang-go && \
-    mkdir -p /root/git
+RUN apt-get update -y
+RUN apt install -y dirmngr
+RUN apt install -y wget
+RUN apt install -y curl
+RUN apt install -y apt-utils
+RUN apt install -y unzip
+RUN apt install -y nano
+RUN apt install -y git
+RUN apt install -y iptables
+RUN apt install -y apt-transport-https
+RUN apt install -y ca-certificates
+RUN apt install -y docker.io docker-compose
+RUN apt install -y curl -sL https://deb.nodesource.com/setup_11.x | bash - && \
+  apt-get update -y && apt-get install -y nodejs
+RUN mkdir -p /root/git
 
-# GRADLE
-RUN wget https://services.gradle.org/distributions/gradle-5.3.1-bin.zip -P /tmp && \
-    unzip -d /opt/gradle /tmp/gradle-*.zip
+# Gradle
+### Enable if gradle is needed. java + gradle is about 800mb + in image size.
+##RUN apt-get update -y && \
+##  apt-get install -y openjdk-11-jdk
+##RUN wget https://services.gradle.org/distributions/gradle-5.4-bin.zip -P /tmp && \
+##  unzip -d /opt/gradle /tmp/gradle-*.zip
+##ENV PATH="/opt/gradle/gradle-5.4/bin:${PATH}"
 
-RUN mkdir -p /root/go/bin && curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+FROM ubuntu:19.04
+COPY --from=build / /

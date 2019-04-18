@@ -21,6 +21,7 @@ $ USR=$(whoami) && docker run --rm \
     -v /Users/$USR/.npmrc:/root/.npmrc \
     -v /Users/$USR/.gitconfig:/root/.gitconfig \
     -v /Users/$USR/.gitignore:/root/.gitignore \
+    -v /var/run/docker.sock:/var/run/docker.sock \
     -it yoohahn/work-container:latest
 ```
 
